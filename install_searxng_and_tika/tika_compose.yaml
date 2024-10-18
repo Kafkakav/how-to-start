@@ -1,0 +1,23 @@
+##tika##
+version: "3.3"
+services:
+  tika:
+    container_name: tika
+    image: apache/tika:latest-full
+    #command: -c /tika-config.xml
+    restart: on-failure
+    ports:
+      - 9998:9998
+    # https://github.com/apache/tika-docker
+    #volumes:
+      #- ./tika/vision/inception-rest-caption.xml:/tika-config.xml
+    networks:
+      - ollama_default
+    logging:
+      driver: json-file
+      options:
+        max-size: 4m
+        max-file: "1"
+networks:
+  ollama_default:
+    external: true

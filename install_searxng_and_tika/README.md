@@ -11,9 +11,8 @@ docker-compose -f ./searxng_compose.yaml up -d
 <table>
   <tboty>
     <tr>
-      <td><img src="https://github.com/Kafkakav/how-to-start/blob/main/pics/searxng01.jpg" width="400" height="400"></td>
-      <td><img src="https://github.com/Kafkakav/how-to-start/blob/main/pics/searxng02.jpg" width="400" height="400"></td>
-
+      <td><img src="https://raw.githubusercontent.com/Kafkakav/how-to-start/refs/heads/main/pics/searxng01.png" width="400" height="400"></td>
+      <td><img src="https://raw.githubusercontent.com/Kafkakav/how-to-start/refs/heads/main/pics/searxng02.png" width="400" height="400"></td>
     </tr>
   </tboty>
 </table> 
@@ -29,7 +28,7 @@ docker-compose -f ./tika_compose.yaml up -d
 <table>
   <tboty>
     <tr>
-      <td colspan="2"><img src="https://github.com/Kafkakav/how-to-start/blob/main/pics/tika01.jpg" width="400"    height="400"></td>
+      <td colspan="2"><img src="https://raw.githubusercontent.com/Kafkakav/how-to-start/refs/heads/main/pics/tika01.jpg" width="400" height="400"></td>
     </tr>
   </tboty>
 </table> 

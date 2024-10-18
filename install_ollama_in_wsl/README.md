@@ -50,6 +50,9 @@ sudo systemctl restart docker
 # If Ollama is on your computer, use this command:
 docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
 
+# Nvida command to check the versions of driver and CUDA
+docker exec ollama nvidia-smi
+
 # If Ollama is on a Different Server, use this command:
 # To modify OLLAMA_BASE_URL for your enviroment. 
 docker run -d -p 3000:8080 -e OLLAMA_BASE_URL=http://192.168.10.10:11434 -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main

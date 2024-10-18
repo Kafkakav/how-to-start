@@ -1,0 +1,61 @@
+dir								= .
+certificate 			= $dir/ssl-cacert.pem
+private_key 			= $dir/ssl-cakey.pem
+new_certs_dir			= $dir/certificates
+database    			= $dir/index.txt
+serial      			= $dir/serial.txt
+unique_subject 		= no
+
+[ca]
+default_ca				= CA_default
+
+[CA_default]
+default_days				= 3650
+default_crl_days		= 30
+default_md					= sha384
+preserve						= no
+nameopt							= default_ca
+certopt							= default_ca
+email_in_dn 				= no
+copy_extensions 		= copy
+unique_subject  		= no
+
+[req]
+default_bits        = 4096
+distinguished_name  = distinguished_name
+x509_extensions     = v3_ca
+req_extensions      = v3_req
+string_mask         = utf8only
+default_md          = sha384
+prompt              = no
+default_days        = 3650
+
+[distinguished_name]
+countryName         = TW
+stateOrProvinceName = Taiwan
+localityName        = Taipei
+organizationName    = NozomiLabs
+organizationalUnitName = Service Team
+commonName         = localhost
+emailAddress       = nozomi@localhost
+
+[v3_ca]
+basicConstraints    = CA:TRUE
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer:always
+keyUsage            = digitalSignature, cRLSign, keyCertSign
+
+[intermediate_ca]
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = CA:true, pathlen:0
+
+[v3_req]
+basicConstraints 			= CA:FALSE
+subjectKeyIdentifier	= hash
+keyUsage 							= keyEncipherment, dataEncipherment, digitalSignature
+subjectAltName      = @alt_names
+
+[alt_names]
+DNS.1 = mysite.example.com
+DNS.2 = localhost

@@ -1,0 +1,29 @@
+[req]
+default_bits        = 4096
+distinguished_name  = req_distinguished_name
+x509_extensions     = v3_req
+prompt              = no
+default_days        = 3650
+default_md					= sha384
+
+[req_distinguished_name]
+countryName         = TW
+stateOrProvinceName = Taiwan
+localityName        = Taipei
+organizationName    = NozomiLabs
+organizationalUnitName = Service Team
+commonName         = localhost
+emailAddress       = nozomi@localhost
+
+[v3_req]
+basicConstraints 			= CA:FALSE
+subjectKeyIdentifier	= hash
+keyUsage 							= keyEncipherment, dataEncipherment, digitalSignature
+subjectAltName				= @alt_names
+
+[alt_names]
+DNS.1 = mysite.example.com
+DNS.2 = mysite.local
+IP.1 = 127.0.0.1
+IP.2 = 172.22.0.2
+

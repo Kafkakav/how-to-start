@@ -28,7 +28,7 @@ docker-compose -f ./tika_compose.yaml up -d
 <table>
   <tboty>
     <tr>
-      <td colspan="2"><img src="https://raw.githubusercontent.com/Kafkakav/how-to-start/refs/heads/main/pics/tika01.jpg" width="400" height="400"></td>
+      <td colspan="2"><img src="https://raw.githubusercontent.com/Kafkakav/how-to-start/refs/heads/main/pics/tika01.png" width="400" height="400"></td>
     </tr>
   </tboty>
 </table> 

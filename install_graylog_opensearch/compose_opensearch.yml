@@ -1,0 +1,53 @@
+version: "3"
+
+
+services:
+  opsearch01:
+    image: opensearchproject/opensearch:2.17.1
+    container_name: opsearch01
+    hostname: opsearch01.local   
+    environment:
+      - "discovery.type=single-node"
+      - "node.name=opsearch01"
+      # Can generate a password for `OPENSEARCH_INITIAL_ADMIN_PASSWORD` using a linux device via:
+      # $tr -dc A-Z-a-z-0-9_@#%^-_=+ < /dev/urandom | head -c${1:-32}
+      # one uppercase letter, one lowercase letter, one digit, and one special character  at least
+      - "OPENSEARCH_INITIAL_ADMIN_PASSWORD=${SET_YOUR_PASSWORD_HERE}"
+      - "OPENSEARCH_JAVA_OPTS=-Xms786m -Xmx786m"
+      - "bootstrap.memory_lock=true"
+      - "action.auto_create_index=false"
+      - "plugins.security.ssl.http.enabled=false"
+      - "plugins.security.disabled=true"
+      - PUID=1500
+      - PGID=1500
+      - TZ=Asia/Taipei
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+    volumes:
+      - ${APP_DATA_DIR}:/usr/share/opensearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+      - "9650:9650"
+    restart: on-failure
+    networks:
+      graylog_bridge:
+        ipv4_address: ${NETWORK_APP_STATIC_IPV4}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2mb"
+        max-file: "4" 
+
+networks:
+  graylog_bridge:
+    external: true

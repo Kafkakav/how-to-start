@@ -1,0 +1,64 @@
+version: "3"
+
+# docker exec -it -u 0 graylog01 /bin/bash
+
+services:
+  graylog01:
+    image: graylog/graylog:6.1.1
+    container_name: graylog01
+    hostname: graylog01.local   
+    environment:
+      - "GRAYLOG_SERVER_JAVA_OPTS=-Dlog4j2.formatMsgNoLookups=true -Xms786m -Xmx786m -Djavax.net.ssl.trustStore=/usr/share/graylog/data/config/cacerts.jks -Djavax.net.ssl.trustStorePassword=changeit"
+    # CHANGE ME (must be at least 16 characters)!
+    # $pwgen -N 1 -s 96
+      - GRAYLOG_PASSWORD_SECRET=${CHANGE_ME}
+    # Password for admin
+    # $echo -n "Enter Password: " && head -1 < /dev/stdin | tr -d '\n' | sha256sum | cut -d " " -f1
+      - GRAYLOG_ROOT_PASSWORD_SHA2=${CHANGE_ME}
+      - GRAYLOG_DATANODE_NODE_ID_FILE="/var/lib/graylog-datanode/node-id"
+      - GRAYLOG_DATANODE_MONGODB_URI="mongodb://mongodb:27017/graylog"
+      - PUID=1500
+      - PGID=1500
+      - TZ=Asia/Taipei
+    #entrypoint: /usr/bin/tini -- wait-for-it esearch01:9200 --  /docker-entrypoint.sh
+    entrypoint: /usr/bin/tini -- wait-for-it opsearch01:9200 --  /docker-entrypoint.sh
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+    volumes:
+      - ${GRAYLOG_JOURNAL_DIR}:/usr/share/graylog/data/journal
+      - ${GRAYLOG_CONFIG_DIR}:/usr/share/graylog/data/config
+    ports:
+      # Graylog web interface and REST API
+      - 9000:9000
+      # Syslog TCP
+      - 1514:1514
+      # Syslog UDP
+      - 1514:1514/udp
+      # GELF TCP
+      - 12201:12201
+      # GELF UDP
+      - 12201:12201/udp
+      # nginx-syslog
+      - 12401:12401/udp
+    restart: always
+    networks:
+      default:
+        ipv4_address: ${NETWORK_APP_STATIC_IPV4}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "4mb"
+        max-file: "4" 
+  
+networks:
+  default:
+    driver: bridge
+    enable_ipv6: false
+    name: graylog_bridge
+    ipam:
+        driver: default
+        config:
+            - subnet: ${NETWORK_IPAM_SUBNET}
+              gateway: ${NETWORK_IPAM_GATEWAY}

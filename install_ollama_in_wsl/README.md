@@ -11,7 +11,7 @@ wsl --install
 ```
 [How to install Linux on Windows with WSL](https://learn.microsoft.com/en-us/windows/wsl/install)
 
-## Docker Desktip Installation
+## Docker Desktop Installation
 1. Visit the official Docker website: https://docs.docker.com/desktop/
 [Install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/)
 2. Verify the installation
@@ -30,6 +30,39 @@ docker run -d --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ol
 
 # test ollama in CLI with the model llama3 ()
 docker exec -it ollama ollama run llama3
+
+# Multiline input
+$ ollama
+>>> """Hello,
+... world!
+... """
+I'm a basic program that prints the famous "Hello, world!" message to the console.
+
+$ ollama run llama3.2 "Summarize this file: $(cat README.md)"
+ Ollama is a lightweight, extensible framework for building and running language models on the local machine. It provides a simple API for creating, running, and managing models, as well as a library of pre-built models that can be easily used in a variety of applications.
+
+```
+
+### CLI Reference
+``` bash
+ollama pull llama3.2
+ollama rm llama3.2
+ollama cp llama3.2 my-model
+ollama list
+ollama ps
+
+
+curl http://localhost:11434/api/generate -d '{
+  "model": "llama3.2",
+  "prompt":"Why is the sky blue?"
+}'
+
+curl http://localhost:11434/api/chat -d '{
+  "model": "llama3.2",
+  "messages": [
+    { "role": "user", "content": "why is the sky blue?" }
+  ]
+}'
 
 ```
 
@@ -63,3 +96,17 @@ docker run -d -p 3000:8080 --gpus all OLLAMA_BASE_URL=http://192.168.10.10:11434
 ```
 Using browser to visit the GUI of Open WebUI http://192.168.10.10:3000 then enjoy.
 
+
+### Upgrading the docker image
+``` shell
+docker pull ollama/ollama
+docker stop ollama
+
+# Checking the location of the files
+docker inspect ollama | grep -i volume
+
+docker rm ollama
+
+docker run -d --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama:0.3.13
+
+```

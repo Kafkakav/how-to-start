@@ -108,9 +108,19 @@ git fetch origin
 git branch -f main origin/main
 ```
 
-# 將最新的 main 合併到 bugfix 分支
+### 將最新的 main 合併到 bugfix 分支
 ``` bash
 git checkout bugfix
 git merge main
 
 ```
+
+### 比較本地分支與遠端追蹤分支
+``` bash
+git diff main origin/main
+
+git log main..origin/main  # 查看遠端有而本地沒有的提交
+git log origin/main..main  # 查看本地有而遠端沒有的提交
+
+```
+

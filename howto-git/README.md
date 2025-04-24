@@ -23,6 +23,15 @@ git commit -m "short message"
 
 ```
 
+### git restore
+``` bash
+git add file.txt       # 誤將 file.txt 加入暫存區
+git restore --staged file.txt  # 從暫存區移除，但保留修改
+
+git restore <file> # 丟棄工作目錄中文件的修改（恢覆到暫存區或最近提交的狀態）
+
+```
+
 ### 更新本地repo
 ``` bash
 # fetch & merge branch main

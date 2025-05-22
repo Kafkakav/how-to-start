@@ -1,4 +1,4 @@
-## git 操作大全
+## git 常用指令
 
 ### git clone
 ``` bash
@@ -85,6 +85,30 @@ git checkout bugfix
 git stash pop  # 等同於 git stash apply + git stash drop
 
 ```
+
+### 解決 git merge 後出現衝突的方法
+``` bash
+git status # check Unmerged paths:
+```
+``` js
+# edit unmerged files, find lines like: 
+<<<<<<< HEAD
+your mmodifed code is here
+=======
+feature code is here
+>>>>>>> feature-branch
+```
+``` bash
+# afiter edited them.  git add them to staged
+git add file1.txt file2.txt
+git status # check staged files
+git commit # commit the changes
+
+# (optional) push to remote branch 
+git push
+
+```
+
 ### 解決 git stash pop 後出現衝突的方法
 ``` bash
 git status

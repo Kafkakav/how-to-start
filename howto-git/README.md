@@ -157,3 +157,8 @@ git log origin/main..main  # 查看本地有而遠端沒有的提交
 
 ```
 
+### 修改commited author
+``` bash
+git commit --amend --author="kafka <kafka.lws@gmail.com>" --no-edit
+git push origin uc_rtty --force-with-lease
+```
